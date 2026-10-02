@@ -518,6 +518,29 @@ html.js [data-reveal].is-visible{ opacity:1; transform:none; }
 .spine-emblem{ transition: transform .6s cubic-bezier(.2,.7,.2,1); }
 .spine-emblem:hover{ transform: rotate(-12deg) scale(1.08); }
 
+/* ---------- footer: "Powered by" publisher credit ---------- */
+.footer-inner{ padding-bottom: 44px; }
+.footer-copy{ padding-bottom: 0; margin-bottom: 30px; }
+.powered{
+  display:flex; align-items:center; justify-content:center; gap: 18px;
+  max-width: 440px; margin: 0 auto; padding-top: 28px;
+  border-top: 1px solid rgba(200,155,60,0.16);
+}
+.powered-label{
+  font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(241,234,217,0.45);
+}
+.powered-logo{ display:block; line-height:0; }
+.powered-logo img{
+  height: 34px; width: auto;
+  opacity: 0.82; transition: opacity var(--transition), transform var(--transition);
+}
+.powered-logo:hover img, .powered-logo:focus-visible img{ opacity: 1; transform: translateY(-2px); }
+@media (max-width: 480px){
+  .powered{ flex-direction: column; gap: 12px; }
+  .powered-logo img{ height: 30px; }
+}
+
 /* ---------- slide-in menu: backdrop + scroll lock ---------- */
 .nav-backdrop{ display:none; }
 @media (max-width: 1080px){

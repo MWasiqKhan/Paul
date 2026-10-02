@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { footerLinks } from "@/lib/content";
 import { Cachet } from "./Ui";
@@ -15,6 +16,20 @@ export default function Footer() {
           ))}
         </nav>
         <p className="footer-copy">&copy; <Year /> Paul Gonave Tirogène — Tous droits réservés.</p>
+
+        <div className="powered">
+          <span className="powered-label">Powered by</span>
+          <a href="https://fortunepublishers.com" target="_blank" rel="noopener" className="powered-logo">
+            <Image
+              src="/images/fortune-publishers-logo.png"
+              alt="Fortune Publishers"
+              width={1019}
+              height={283}
+              sizes="260px"
+              quality={90}
+            />
+          </a>
+        </div>
       </div>
     </footer>
   );

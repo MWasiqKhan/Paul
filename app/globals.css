@@ -168,7 +168,6 @@ p{ margin: 0 0 18px; }
   padding-bottom: 3px;
   transition: color var(--transition), border-color var(--transition);
 }
-.main-nav a em{ font-style:normal; color: var(--gold); }
 .main-nav a:hover{ color: var(--paper); border-color: var(--gold); }
 
 .menu-toggle{
@@ -195,7 +194,7 @@ p{ margin: 0 0 18px; }
 .hero .misreg{ max-width: 800px; margin-bottom: 32px; }
 .hero-collage{
   position:relative;
-  margin-top: -60px;
+  margin-top: 56px; /* was -60px in the original, which pulled the portrait over the buttons */
   margin-left: clamp(0px, 30vw, 460px);
   max-width: 620px;
   display:flex; align-items:flex-end;
@@ -377,6 +376,22 @@ html.js [data-reveal].is-visible{ opacity:1; transform:none; }
   .contact-grid{ grid-template-columns:1fr; }
   .contact-form{ padding-top: 20px; }
   .hero-collage{ margin-left: clamp(0px, 14vw, 200px); }
+
+  /* The six links + brand + Newsletter don't fit below ~1080px, so switch to the slide-in menu here. */
+  .main-nav{
+    position: fixed; top:0; right:0; height:100vh; height:100dvh; width: min(80vw, 320px);
+    background: var(--ink-deep);
+    flex-direction:column; gap: 26px;
+    padding: 120px 36px 40px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform var(--transition), visibility 0s linear .3s;
+  }
+  .main-nav.open{ transform: translateX(0); visibility: visible; transition: transform var(--transition), visibility 0s; }
+  .main-nav a{ font-size: 0.9rem; align-self:flex-start; }
+  .menu-toggle{ display:flex; position:relative; z-index:2; }
+  .topbar-cta{ margin-left:auto; }
 }
 
 @media (max-width: 900px){
@@ -392,24 +407,28 @@ html.js [data-reveal].is-visible{ opacity:1; transform:none; }
 }
 
 @media (max-width: 760px){
-  .main-nav{
-    position: fixed; top:0; right:0; height:100vh; width: min(80vw, 320px);
-    background: var(--ink-deep);
-    flex-direction:column; gap: 26px;
-    padding: 120px 36px 40px;
-    transform: translateX(100%);
-    transition: transform var(--transition);
-  }
-  .main-nav.open{ transform: translateX(0); }
-  .main-nav a{ font-size: 0.9rem; }
+  .topbar{ padding-left: 22px; padding-right: 22px; }
   .topbar-cta{ display:none; }
-  .menu-toggle{ display:flex; }
+  .menu-toggle{ margin-left:auto; }
   .section-inner{ padding: 90px 22px; }
   .hero-inner{ padding: 130px 22px 0; }
   .hero-collage{ margin-left:0; margin-top: 40px; max-width: 100%; padding-bottom: 60px; }
   .vision{ padding: 100px 22px; }
   h1{ font-size: 2.3rem; }
   .cachet--hero{ width: 96px; height:96px; right:0; bottom:0; }
+
+  /* phone fixes */
+  .scroll-cue{ display:none; }
+  .hero{ min-height: auto; }
+  .hero .btn-row .btn, .featured .btn-row .btn{ flex: 1 1 100%; justify-content:center; }
+  .hero-collage{ max-width: 420px; margin-right:auto; }
+  .cachet--vision{ position:relative; right:auto; bottom:auto; width: 88px; height:88px; margin: 44px 0 0 auto; }
+  .ledger-row{ gap: 18px; padding: 30px 0; }
+  .ledger-num{ font-size: 1.3rem; }
+  .parole p{ font-size: 1.15rem; }
+  .pull-quote{ padding-left: 22px; }
+  .pull-quote p{ font-size: 1.2rem; }
+  .footer-nav{ gap: 14px 22px; }
 }
 
 /* =========================================================
@@ -499,6 +518,23 @@ html.js [data-reveal].is-visible{ opacity:1; transform:none; }
 .spine-emblem{ transition: transform .6s cubic-bezier(.2,.7,.2,1); }
 .spine-emblem:hover{ transform: rotate(-12deg) scale(1.08); }
 
+/* ---------- slide-in menu: backdrop + scroll lock ---------- */
+.nav-backdrop{ display:none; }
+@media (max-width: 1080px){
+  .main-nav{ z-index: 1; }
+  .nav-backdrop{
+    display:block; position:fixed; inset:0; z-index:0;
+    background: rgba(10,17,30,0.6);
+    opacity:0; pointer-events:none; transition: opacity var(--transition);
+  }
+  .nav-backdrop.open{ opacity:1; pointer-events:auto; }
+  html.nav-open, html.nav-open body{ overflow:hidden; }
+
+  /* book page: title and text before the cover once the grid stacks */
+  .book-detail .featured-copy{ order:-1; }
+  .book-detail .featured-cover{ margin-top: 20px; }
+}
+
 /* ---------- page transition ---------- */
 .page-enter{ animation: pageIn .6s ease backwards; }
 @keyframes pageIn{ from{ opacity:0; } }
@@ -556,7 +592,7 @@ html.js [data-reveal].is-visible{ opacity:1; transform:none; }
   html.js .is-visible .about-watermark, html.js .is-visible .featured-watermark{ opacity:1; transform:none; }
 
   /* mobile menu links slide in one after another */
-  @media (max-width: 760px){
+  @media (max-width: 1080px){
     .main-nav a{ opacity:0; transform: translateX(24px); transition: opacity .4s ease, transform .4s ease, color var(--transition); }
     .main-nav.open a{ opacity:1; transform:none; transition-delay: calc(var(--i, 0) * 60ms + 120ms); }
   }

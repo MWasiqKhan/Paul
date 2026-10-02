@@ -15,6 +15,18 @@ export default function Topbar() {
     setOpen(false);
   }, [pathname]);
 
+  // While the mobile menu is open: lock page scroll and close on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.documentElement.classList.add("nav-open");
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.documentElement.classList.remove("nav-open");
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   useEffect(() => {
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -46,11 +58,11 @@ export default function Topbar() {
               style={{ "--i": i } as React.CSSProperties}
               onClick={() => setOpen(false)}
             >
-              <em>{l.num}</em>
               {l.label}
             </Link>
           ))}
         </nav>
+        <div className={`nav-backdrop${open ? " open" : ""}`} onClick={() => setOpen(false)} aria-hidden="true" />
 
         <a href="#newsletter" className="btn btn--ghost-dark btn--small topbar-cta">Newsletter</a>
 

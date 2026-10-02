@@ -1,10 +1,10 @@
 export const navLinks = [
-  { href: "/", num: "01", label: "Accueil" },
-  { href: "/a-propos", num: "02", label: "À propos" },
-  { href: "/livres", num: "03", label: "Livres" },
-  { href: "/reflexions", num: "04", label: "Réflexions" },
-  { href: "/publications", num: "05", label: "Publications" },
-  { href: "/contact", num: "06", label: "Contact" },
+  { href: "/", label: "Accueil" },
+  { href: "/a-propos", label: "À propos" },
+  { href: "/livres", label: "Livres" },
+  { href: "/reflexions", label: "Réflexions" },
+  { href: "/publications", label: "Publications" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export const footerLinks = [
